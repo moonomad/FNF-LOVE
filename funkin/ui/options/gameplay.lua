@@ -14,20 +14,20 @@ local data = {
 	end, percentvalue},
 	-- {"notesBelowHUD", "Notes below HUD", "boolean"},
 	{"flashingLights", "Flashing lights", "boolean"},
-	{"downScroll",    "Down scroll",     "boolean"},
-	{"middleScroll",  "Middle scroll",   "boolean"},
-	{"ghostTap",      "Ghost tap",       "boolean"},
-	{"noteSplash",    "Note splash",     "boolean"},
-	{"botplayMode",   "Botplay",         "boolean"},
+	{"downScroll",	  "Down scroll",	 "boolean"},
+	{"middleScroll",  "Middle scroll",	 "boolean"},
+	{"ghostTap",	  "Ghost tap",		 "boolean"},
+	{"noteSplash",	  "Note splash",	 "boolean"},
+	{"botplayMode",	  "Botplay",		 "boolean"},
 	{"playback", "Playback", "number", function(add)
 		local value = math.clamp(ClientPrefs.data.playback + (add * 0.05), 0.1, 5)
 		ClientPrefs.data.playback = value
 	end, function(value) return "x" .. value end},
-	-- {"timeType",      "Song time type",      "string", {"left", "elapsed"}},
+	-- {"timeType",		 "Song time type",		"string", {"left", "elapsed"}},
 	{"gameOverInfos", "Show game over info", "boolean"},
 
 	{"AUDIO"},
-	{"pauseMusic",    "Pause music",         "string", {"railways", "breakfast"}},
+	{"pauseMusic",	  "Pause music",		 "string", {"railways", "breakfast"}},
 	{"hitSound", "Hit sound volume", "number", function(add)
 		local value = math.clamp(ClientPrefs.data.hitSound + add, 0, 100)
 		ClientPrefs.data.hitSound = value
@@ -51,7 +51,10 @@ local data = {
 		local value = math.clamp(ClientPrefs.data.vocalVolume + add, 0, 100)
 		ClientPrefs.data.vocalVolume = value
 	end, percentvalue},
-	{"songOffset", "Song offset", "number"},
+	{"songOffset", "Note offset (timing)", "number", function(add)
+		local value = math.clamp(ClientPrefs.data.songOffset + add, -9999, 9999)
+		ClientPrefs.data.songOffset = value
+	end, function(value) return value end},
 	{"calibration", "Calibrate", function(optionsUI)
 		if optionsUI.aboutToGoToCalibration then return end
 		util.playSfx(paths.getSound('scrollMenu'))

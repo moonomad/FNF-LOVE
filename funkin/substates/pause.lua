@@ -10,7 +10,9 @@ function PauseSubstate:new()
 		table.insert(self.menuItems, 3, "Change difficulty")
 	end
 	self.blockInput = false
-
+	
+	self.currentOffset = ClientPrefs.data.songOffset
+	
 	self:loadMusic()
 
 	self.bg = Graphic(0, 0, game.width, game.height, Color.BLACK)
@@ -78,6 +80,8 @@ function PauseSubstate:enter()
 	Timer.tween(0.4, self.deathsText, {y = self.deathsText.y + 5, alpha = 1},
 		'in-out-quart', nil, 0.4)
 
+	self.currentOffset = ClientPrefs.data.songOffset
+	
 	if love.system.getDevice() == "Mobile" then
 		self.buttons = VirtualPadGroup()
 		local w = 134
@@ -274,7 +278,11 @@ function PauseSubstate:close()
 	self.optionsUI = nil
 
 	if self.buttons then self.buttons:destroy() end
-
+	
+	if self.currentOffset ~= ClientPrefs.data.songOffset then
+		self.selectDifficulty( PlayState.songDifficulty:lower( ) )
+	end
+	
 	PauseSubstate.super.close(self)
 end
 

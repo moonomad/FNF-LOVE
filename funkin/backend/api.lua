@@ -158,7 +158,7 @@ function API.chart.readDiff(bpm, data, isV1)
 					local hit = s.mustHitSection
 					if column > 3 then hit = not hit end
 					table.insert(hit and bf or dad, {
-						t = tonumber(n[1]),
+						t = tonumber(n[1]) + ClientPrefs.data.songOffset,
 						d = column % 4,
 						l = tonumber(n[3]) or 0,
 						k = kind,
@@ -169,7 +169,7 @@ function API.chart.readDiff(bpm, data, isV1)
 				focus = s.gfSection and 2 or (s.mustHitSection and 0 or 1)
 				if focus ~= lastFocus then
 					table.insert(events, {
-						t = time,
+						t = time + ClientPrefs.data.songOffset,
 						e = "FocusCamera",
 						v = focus
 					})
@@ -196,7 +196,7 @@ function API.chart.readDiff(bpm, data, isV1)
 		for _, n in ipairs(data) do
 			local column = tonumber(n.d)
 			table.insert(column > 3 and dad or bf, {
-				t = tonumber(n.t),
+				t = tonumber(n.t) + ClientPrefs.data.songOffset,
 				d = column % 4,
 				l = tonumber(n.l) or 0,
 				k = n.k
